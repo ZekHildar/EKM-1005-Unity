@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PressureSensor : MonoBehaviour
 {
     public GameObject Tube;
+    public TextMeshPro Text;
     Sensor pressureSensor = new Sensor();
+    public void Awake()
+    {
+        pressureSensor.AddUnits("kgf/cm^2", 0.0102, 0);
+        pressureSensor.AddUnits("Ãœ‡", 0.001, 0);
+        pressureSensor.AddUnits(" œ‡", 1, 0);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +23,8 @@ public class PressureSensor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //pressureSensor.Measure(Tube.GetComponent<Tube>())
+        pressureSensor.Measure(Tube.GetComponent<Pipe>().pressure.Parameters);
+        string DisplayedValue = pressureSensor.MeasuredValue.ToString().Substring(0, 5);
+        Text.text = DisplayedValue;
     }
 }

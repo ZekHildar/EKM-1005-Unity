@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-[System.Runtime.InteropServices.ComVisible(true)]
 
 public class TechParameters
 {
@@ -42,6 +40,27 @@ public class Sensor
     public double LowerLimit { get; set; }
     public double UpperLimit { get; set; }
 
+    Dictionary<string, (double k, double b)> _supportedUnits = new Dictionary<string, (double k, double b)>();
+
+    public void AddUnits(string UnitName, double _k, double _b)
+    {
+        _supportedUnits.Add(UnitName, (_k, _b));
+    }
+
+    private string _units;
+
+    public string Units
+    {
+        get { return _units; }
+        set
+        {
+            if (_supportedUnits.ContainsKey(value))
+                _units = value;
+            else _units = DefaultUnits;
+        }
+    }
+    public string DefaultUnits { get; set; }
+
     public void Measure(double param)
     {
         if (param < LowerLimit) _MeasuredValue = LowerLimit;
@@ -58,5 +77,5 @@ public class Sensor
 
 public class MainParam : MonoBehaviour
 {
-
+    
 }
