@@ -27,8 +27,6 @@ public class TechParameters
     public TechParameters()
     {
         InValue = 100;
-        
-
     }
 }
 
@@ -83,10 +81,11 @@ public class Sensor
         if (param < LowerLimit) _MeasuredValue = Math.Round(LowerLimit,2);
         if (param > UpperLimit) _MeasuredValue = Math.Round(UpperLimit, 2);
         if (_units == "ÊÏà") _MeasuredValue = _MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b;
-        else if (_units == "kgf/cm^2") _MeasuredValue = Math.Round((_MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b), 4);
+        else if (_units == "kgf/cm^2") 
+            _MeasuredValue = Math.Round((_MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b), 4);
         else _MeasuredValue = Math.Round((_MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b), 4);
         if (LowerLimit > UpperLimit) LowerLimit = UpperLimit;
-        if (UpperLimit < LowerLimit) UpperLimit = LowerLimit; //test
+        else if (UpperLimit < LowerLimit) UpperLimit = LowerLimit; //test
 
     }
 
