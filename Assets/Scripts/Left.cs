@@ -5,6 +5,7 @@ using UnityEngine;
 public class Left : MonoBehaviour
 {
     public Animator anim;
+    Sensor pressureSensor = new Sensor();
     void OnMouseDown()
         {
         anim.SetTrigger("Click");

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TechParameters
 {
@@ -63,17 +64,36 @@ public class Sensor
     }
     public string DefaultUnits { get; set; }
 
+    public string[] GetSupportedUnits()
+    {
+        int UnitsCount = _supportedUnits.Count;
+        string[] _out = new string[UnitsCount];
+        int i = 0;
+        foreach (var u in _supportedUnits)
+        {
+            _out[i] = u.Key;
+            i++;
+        }
+        return _out;
+    }
+
     public void Measure(double param)
     {
-        _MeasuredValue = param;
-        if (param < LowerLimit) _MeasuredValue = LowerLimit;
-        if (param > UpperLimit) _MeasuredValue = UpperLimit;
+        _MeasuredValue = Math.Round(param, 2);
+        if (param < LowerLimit) _MeasuredValue = Math.Round(LowerLimit,2);
+        if (param > UpperLimit) _MeasuredValue = Math.Round(UpperLimit, 2);
+        if (_units == "ÊÏà") _MeasuredValue = _MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b;
+        else if (_units == "kgf/cm^2") _MeasuredValue = Math.Round((_MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b), 4);
+        else _MeasuredValue = Math.Round((_MeasuredValue * _supportedUnits[_units].k + _supportedUnits[_units].b), 4);
+        if (LowerLimit > UpperLimit) LowerLimit = UpperLimit;
+        if (UpperLimit < LowerLimit) UpperLimit = LowerLimit; //test
+
     }
 
     public Sensor()
     {
         LowerLimit = 50d;
-        UpperLimit = 150d;
+        UpperLimit = 150;
         _MeasuredValue = 100d;
     }
 }
