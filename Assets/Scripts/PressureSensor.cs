@@ -6,7 +6,8 @@ using TMPro;
 public class PressureSensor : MonoBehaviour
 {
     public GameObject Tube;
-    public TextMeshPro Text;
+    public TMPro.TextMeshPro Text;
+    public TMPro.TextMeshPro Text2;
     Sensor pressureSensor = new Sensor();
     public void Awake()
     {
@@ -24,7 +25,9 @@ public class PressureSensor : MonoBehaviour
     void Update()
     {
         pressureSensor.Measure(Tube.GetComponent<Pipe>().pressure.Parameters);
+        Debug.Log(pressureSensor.MeasuredValue);
         string DisplayedValue = pressureSensor.MeasuredValue.ToString().Substring(0, 5);
-        Text.text = DisplayedValue;
+        string LowerDisp = pressureSensor.LowerLimit.ToString().Substring(0, 2);
+        Text2.text = LowerDisp;
     }
 }

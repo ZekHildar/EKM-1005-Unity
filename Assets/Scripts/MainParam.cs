@@ -20,12 +20,14 @@ public class TechParameters
 
     public void Calculus(float t)
     {
-        _Parameters = InValue + (Mathf.Sin(9 * t) / 10);
+        _Parameters = InValue + 10f*(Mathf.Sin(0.1f*t));
         _OutValue = _Parameters;
     }
     public TechParameters()
     {
         InValue = 100;
+        
+
     }
 }
 
@@ -63,15 +65,16 @@ public class Sensor
 
     public void Measure(double param)
     {
+        _MeasuredValue = param;
         if (param < LowerLimit) _MeasuredValue = LowerLimit;
         if (param > UpperLimit) _MeasuredValue = UpperLimit;
     }
 
     public Sensor()
     {
-        LowerLimit = 95;
-        UpperLimit = 105;
-        _MeasuredValue = 100;
+        LowerLimit = 50d;
+        UpperLimit = 150d;
+        _MeasuredValue = 100d;
     }
 }
 
